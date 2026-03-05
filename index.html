@@ -8,232 +8,475 @@
     <style>
         :root {
             --bg: #030303;
+            --topbar: #030303ac;
             --surface: #0a0a0a;
             --primary: #10b981;
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
             --border: #1e293b;
             --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-            
-            /* Vertical Rhythm & Spacing */
             --section-spacer: clamp(8rem, 15vh, 14rem);
             --content-width: 1000px;
             --text-width: 700px;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        /* Reset & Base */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #ffffff;
+                --topbar: #ffffffac;
+                --surface: #f8f9fa;
+                --primary: #059669;
+                --text-main: #0f172a;
+                --text-dim: #475569;
+                --border: #e2e8f0;
+            }
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; }
-        body { 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            font-family: 'Inter', system-ui, -apple-system, sans-serif; 
-            line-height: 1.8; /* Increased for ADHD readability */
+        html { scroll-behavior: auto; font-size: 16px; }
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.8;
             -webkit-font-smoothing: antialiased;
         }
-
-        .container { 
-            max-width: var(--content-width); 
-            margin: 0 auto; 
-            padding: 0 1.5rem; 
+        .container {
+            max-width: var(--content-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
-
-        /* Navigation - Thinner & Cleaner */
-        header { 
-            position: fixed; top: 0; width: 100%; z-index: 1000; 
-            background: rgba(3, 3, 3, 0.1); backdrop-filter: blur(20px); 
-            border-bottom: 1px solid rgba(30, 41, 59, 0.5); 
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: var(--topbar); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.5);
         }
         nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        .logo { font-weight: 800; color: #fff; text-decoration: none; font-size: 1rem; letter-spacing: -0.5px; }
-        .nav-links { display: flex; gap: 3rem; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 500; transition: var(--transition); }
-        .nav-links a:hover { color: var(--primary); }
+        .logo { font-weight: 800; color: var(--text-main); text-decoration: none; font-size: 1rem; letter-spacing: -0.5px; }
 
-        /* Main Section Spacing */
+        .controls { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
+        .controls a { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 500; transition: var(--transition); }
+        .controls a:hover { color: var(--primary); }
+
         section { padding: var(--section-spacer) 0; }
-
-        /* Hero - Centered & Breathable */
-        .hero { text-align: center; display: flex; margin-top: 10rem;  margin-bottom: 10rem; flex-direction: column; align-items: center; }
-        .portrait-wrapper { margin-bottom: 3rem; position: relative; }
-        .portrait { 
-            width: 180px; height: 180px; border-radius: 50%; 
-            border: 2px solid var(--border); padding: 5px;
-            background-size: cover; background-repeat: no-repeat;
-            transition: var(--transition);;
-        }
-        .hero:hover .portrait { border-color: var(--primary); filter: grayscale(0%); transform: translateY(-5px); }
-
-        h1 { 
-            font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 900; 
-            line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.04em; 
+        .hero { text-align: center; display: flex; margin-top: 10rem; margin-bottom: 10rem; flex-direction: column; align-items: center; }
+        h1 {
+            font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 900;
+            line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.04em;
             max-width: var(--text-width); margin-left: auto; margin-right: auto;
         }
-        .subtitle { 
-            font-size: 1.25rem; color: var(--text-dim); margin-bottom: 3rem; 
-            max-width: var(--text-width); margin-left: auto; margin-right: auto; 
+        .subtitle {
+            font-size: 1.25rem; color: var(--text-dim); margin-bottom: 3rem;
+            max-width: var(--text-width); margin-left: auto; margin-right: auto;
         }
-
-        /* Buttons */
         .btn-group { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-        .btn { 
-            padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600; 
-            text-decoration: none; transition: var(--transition); font-size: 0.95rem; 
+        .btn {
+            padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600;
+            text-decoration: none; transition: var(--transition); font-size: 0.95rem;
+            cursor: pointer; border: none;
         }
         .btn-p { background: var(--primary); color: #000; }
-        .btn-s { border: 1px solid var(--border); color: #fff; }
+        .btn-s { border: 1px solid var(--text-main); color: var(--text-main); background: transparent; }
         .btn:hover { transform: scale(1.05); box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.4); }
 
-        /* Stack Grid - More Vertical Margin */
+        /* Stack Section */
         .stack-section { padding: 4rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .stack-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        .stack-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 2rem; margin-top: 3rem;
         }
         .stack-item { text-align: center; transition: var(--transition); }
-        .stack-item i { font-size: 2.5rem; display: block; margin-bottom: 1rem; color: var(--text-dim); }
+        .stack-item i { font-size: 2.5rem; display: block; margin-bottom: 1rem; color: var(--text-dim); transition: var(--transition); }
         .stack-item span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
         .stack-item:hover i { color: var(--primary); transform: translateY(-5px); }
 
-        /* Projects - High Spacing Bento Box */
-        .projects-header { margin-top: 10rem; margin-bottom: 5rem; text-align: center; }
-        .project-grid { 
-            display: grid; grid-template-columns: 1fr; 
-            gap: 4rem; /* Massive gap to prevent crowded feel */
-        }
-        
-        /* Side-by-side on large screens */
-        @media (min-width: 1024px) {
-            .project-grid { grid-template-columns: 1fr 1fr; }
+        /* Mobile horizontal scroll for stack */
+        @media (max-width: 768px) {
+            .stack-grid {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 0;
+                margin-top: 2rem;
+                padding-bottom: 0.75rem;
+                scrollbar-width: thin;
+                scrollbar-color: var(--border) transparent;
+                -webkit-overflow-scrolling: touch;
+            }
+            .stack-grid::-webkit-scrollbar { height: 3px; }
+            .stack-grid::-webkit-scrollbar-track { background: transparent; }
+            .stack-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+            .stack-item {
+                flex: 0 0 120px;
+                padding: 0 1rem;
+            }
         }
 
-        .p-card { 
-            background: var(--surface); border: 1px solid var(--border); 
-            border-radius: 24px; padding: 3rem; position: relative;
-            transition: var(--transition);
+        /* Projects */
+        .projects-header { margin-top: 10rem; margin-bottom: 5rem; text-align: center; }
+        .project-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
+        @media (min-width: 1024px) { .project-grid { grid-template-columns: 1fr 1fr; } }
+        .p-card {
+            border-radius: 24px; padding: 3rem; transition: var(--transition);
         }
         .p-card:hover { border-color: var(--primary); transform: translateY(-10px); }
-        .p-card i { font-size: 1.5rem; color: var(--primary); margin-bottom: 2rem; display: block; }
-        .p-title { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .p-card > i { font-size: 1.5rem; color: var(--primary); margin-bottom: 2rem; display: block; }
+        .p-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
         .p-desc { color: var(--text-dim); margin-bottom: 2rem; font-size: 1.05rem; }
         .tag-list { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-        .tag { 
-            font-family: var(--font-mono); font-size: 0.7rem; color: var(--primary); 
-            background: rgba(16, 185, 129, 0.05); padding: 0.4rem 1rem; 
-            border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2); 
+        .tag {
+            font-family: var(--font-mono); font-size: 0.7rem; color: var(--primary);
+            background: rgba(16, 185, 129, 0.05); padding: 0.4rem 1rem;
+            border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
+        /* Blog */
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .blog-card {
+            border-radius: 20px; padding: 2rem; cursor: pointer;
+            transition: var(--transition);
+        }
+        .blog-card:hover { transform: translateY(-8px); border-color: var(--primary); }
+        .blog-card .date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
+        .blog-card h3 { margin: 1rem 0; font-size: 1.4rem; }
+        .blog-card .excerpt { color: var(--text-dim); font-size: 1.05rem; }
+
+        /* Full Blog Post */
+        .full-post {
+            max-width: 720px;
+            margin: 4rem auto;
+            margin-top: 8rem;
+            padding: 2rem;
+            border-radius: 24px;
+        }
+        .full-post h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 1.5rem; }
+        .full-post .meta { font-size: 1rem; color: var(--text-dim); margin-bottom: 3rem; }
+
+        /* Table: scroll only the table, not the page */
+        .full-post .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        .full-post table {
+            width: 100%;
+            min-width: 500px;
+            border-collapse: collapse;
+        }
+        .full-post th, .full-post td { border: 1px solid var(--border); padding: 1rem; text-align: left; }
+        .full-post th { background: var(--bg); }
+
+        @media (max-width: 768px) {
+            .full-post {
+                margin: 1rem 0;
+                padding: 1rem;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+            .full-post h1 { font-size: 1.8rem; }
+        }
+
+        /* Gallery */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
+        .gallery-grid img {
+            width: 100%; height: auto; border-radius: 16px;
+            transition: var(--transition); object-fit: cover;
+        }
+        .gallery-grid img:hover { transform: scale(1.04); }
+
         /* Footer */
-        footer { padding: 8rem 0; text-align: center; background: #010101; }
+        footer { padding: 8rem 0; text-align: center; background: var(--bg); }
         .mono { font-family: var(--font-mono); color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; }
         .footer-links { display: flex; justify-content: center; gap: 4rem; margin: 3rem 0; }
         .footer-links a { color: var(--text-dim); text-decoration: none; transition: var(--transition); }
         .footer-links a:hover { color: var(--primary); }
 
-        /* Responsive Fixes */
+        /* Blinking green dot */
+        .status-dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+            animation: blink 1.4s ease-in-out infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
+            50% { opacity: 0.3; box-shadow: 0 0 0 4px rgba(16,185,129,0); }
+        }
+
+        /* Country flags in footer */
+        .footer-flags {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            opacity: 0.36;
+        }
+        .flag-svg {
+            width: 32px;
+            height: 22px;
+            border-radius: 3px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
         @media (max-width: 768px) {
             :root { --section-spacer: 6rem; }
             .nav-links { display: none; }
-            h1 { font-size: 2.2rem; }
-            .p-card { padding: 2rem; }
+            .controls { gap: 1rem; }
         }
     </style>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
 </head>
 <body>
+    <div id="app"></div>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">HEDI <span style="color:var(--primary)">BEN CHIBOUB</span></a>
-                <ul class="nav-links">
-                    <li><a href="#projects">Engineering</a></li>
-                    <li><a href="#stack">Stack</a></li>
-                    <li><a href="mailto:hodhodbenchiboub@gmail.com">Hire</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <script>
+        const { createApp } = Vue;
+        const { createRouter, createWebHashHistory } = VueRouter;
 
-    <section class="container hero">
-     
-        <p class="mono">// SYSTEMS ARCHITECT</p>
-        <h1>Architecting <span style="color:var(--primary)">Private</span>, Local-First Intelligence.</h1>
-        <p class="subtitle">Engineering high-performance Vue.js components and offline AI integration. Focusing on data sovereignty and zero-latency UX since 2019.</p>
-        <div class="btn-group">
-            <a href="#projects" class="btn btn-p">View Production</a>
-            <a href="mailto:hodhodbenchiboub@gmail.com" class="btn btn-s">Direct Line</a>
-        </div>
-    </section>
+        // Disable smooth scroll on route changes
+        function scrollToTopInstant() {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
 
-    <section id="stack" class="stack-section">
-        <div class="container">
-            <p class="mono" style="text-align:center;">// CORE_ENGINE_STACK</p>
-            <div class="stack-grid">
-                <div class="stack-item"><i class="fab fa-vuejs"></i><span>Vue / Pinia</span></div>
-                <div class="stack-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
-                <div class="stack-item"><i class="fab fa-python"></i><span>Python AI</span></div>
-                <div class="stack-item"><i class="fas fa-microchip"></i><span>Local Inference</span></div>
-                <div class="stack-item"><i class="fas fa-shield-alt"></i><span>Privacy Ops</span></div>
-            </div>
-        </div>
-    </section>
+        const Home = {
+            emits: ['scroll-to-projects'],
+            template: `
+                <section class="container hero">
+                    <p class="mono">// SYSTEMS ARCHITECT</p>
+                    <h1>Architecting <span style="color:var(--primary)">Private</span>, Local-First Intelligence.</h1>
+                    <p class="subtitle">Engineering high-performance Vue.js components and offline AI integration. Focusing on data sovereignty and zero-latency UX since 2019.</p>
+                    <div class="btn-group">
+                        <button @click="$emit('scroll-to-projects')" class="btn btn-p">View Production</button>
+                        <a href="mailto:hodhodbenchiboub@gmail.com" class="btn btn-s">Direct Line</a>
+                    </div>
+                </section>
 
-    <section id="projects" class="container">
-        <div class="projects-header">
-            <p class="mono">// DEPLOYED_WORK</p>
-            <h2 style="font-size: 2.5rem; margin-top: 1rem;">Selected Systems</h2>
-        </div>
-        
-        <div class="project-grid">
-            <article class="p-card">
-                <i class="fas fa-music"></i>
-                <div class="p-title">BlockTheBeat <a href="https://www.blockthebeat.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                <p class="p-desc">Deep-focus audio engine. Uses local AI models to isolate and strip background frequencies directly on the device hardware.</p>
-                <div class="tag-list">
-                    <span class="tag">AI Inference</span><span class="tag">Electron</span><span class="tag">Vite</span>
-                </div>
-            </article>
+                <section id="stack" class="stack-section">
+                    <div class="container">
+                        <p class="mono" style="text-align:center;">// CORE_ENGINE_STACK</p>
+                        <div class="stack-grid">
+                            <div class="stack-item"><i class="fab fa-vuejs"></i><span>Vue</span></div>
+                            <div class="stack-item"><i class="fab fa-python"></i><span>Python</span></div>
+                            <div class="stack-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+                            <div class="stack-item"><i class="fas fa-code"></i><span>C++</span></div>
+                            <div class="stack-item"><i class="fab fa-rust"></i><span>Rust</span></div>
+                        </div>
+                    </div>
+                </section>
 
-            <article class="p-card">
-                <i class="fas fa-brain"></i>
-                <div class="p-title">Lunate.ai <a href="https://www.lunate.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                <p class="p-desc">A device-native AI orchestrator. Engineered for total data sovereignty, running complex LLMs without cloud dependencies.</p>
-                <div class="tag-list">
-                    <span class="tag">WASM</span><span class="tag">LLM Ops</span><span class="tag">Offline-First</span>
-                </div>
-            </article>
+                <section id="projects" class="container">
+                    <div class="projects-header">
+                        <p class="mono">// DEPLOYED_WORK</p>
+                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Selected Projects</h2>
+                    </div>
+                    <div class="project-grid">
+                        <article class="p-card">
+                            <i class="fas fa-music"></i>
+                            <div class="p-title">BlockTheBeat <a href="https://www.blockthebeat.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
+                            <p class="p-desc">Deep-focus audio engine. Uses local AI models to isolate and strip background frequencies directly on the device hardware.</p>
+                            <div class="tag-list">
+                                <span class="tag">AI Inference</span><span class="tag">Electron</span><span class="tag">Vite</span>
+                            </div>
+                        </article>
+                        <article class="p-card">
+                            <i class="fas fa-brain"></i>
+                            <div class="p-title">Lunate.ai <a href="https://www.lunate.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
+                            <p class="p-desc">A device-native AI orchestrator. Engineered for total data sovereignty, running complex LLMs without cloud dependencies.</p>
+                            <div class="tag-list">
+                                <span class="tag">WASM</span><span class="tag">LLM Ops</span><span class="tag">Offline-First</span>
+                            </div>
+                        </article>
+                        <article class="p-card">
+                            <i class="fas fa-tasks"></i>
+                            <div class="p-title">Yawmi.live <a href="https://www.todo.yawmi.live/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
+                            <p class="p-desc">High-frequency task management. Minimalist PWA designed for zero-latency interactions and 100% persistent offline state.</p>
+                            <div class="tag-list">
+                                <span class="tag">Vue 3</span><span class="tag">PWA</span><span class="tag">UX Engineering</span>
+                            </div>
+                        </article>
+                        <article class="p-card">
+                            <i class="fas fa-sitemap"></i>
+                            <div class="p-title">BCcarver <a href="https://github.com/mrkinix/BCcarver/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
+                            <p class="p-desc">Proactive constraint solver for Hamiltonian cycles. Rust implementation with backtracking, heuristics, memoization &amp; advanced filters.</p>
+                            <div class="tag-list">
+                                <span class="tag">Rust</span><span class="tag">Graph Theory</span><span class="tag">Algorithms</span>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            `
+        };
 
-            <article class="p-card">
-                <i class="fas fa-tasks"></i>
-                <div class="p-title">Yawmi.live <a href="https://www.todo.yawmi.live/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                <p class="p-desc">High-frequency task management. Minimalist PWA designed for zero-latency interactions and 100% persistent offline state.</p>
-                <div class="tag-list">
-                    <span class="tag">Vue 3</span><span class="tag">PWA</span><span class="tag">UX Engineering</span>
-                </div>
-            </article>
+        const Blog = {
+            data() {
+                return {
+                    posts: [
+                        {
+                            id: 1,
+                            title: "Unveiling Ben Chiboub Carver (BCC): My Journey to a Faster Hamiltonian Cycle Solver",
+                            date: "March 05, 2026",
+                            excerpt: "An independent Rust implementation of a proactive constraint-based solver that crushes dense random graphs near the Hamiltonicity threshold.",
+                            content: `
+                                <h3>What is the Hamiltonian Cycle Problem?</h3>
+                                <p>Imagine you're planning a road trip that visits every city exactly once and returns home—that's a Hamiltonian cycle in graph terms. Graphs model everything from social networks to DNA sequencing, but finding such cycles is NP-complete: super hard for large graphs.</p>
+                                <p>I stumbled into this while tinkering with graph puzzles. Frustrated by slow backtracking, I built a "carving" approach: proactively lock essential edges and delete impossible ones using constraint propagation, articulation-point filters, and memoization.</p>
+                                
+                                <h3>The Proof is in the Performance</h3>
+                                <div class="table-wrapper">
+                                <table>
+                                    <thead><tr><th>Adversarial Case</th><th>N</th><th>Expected</th><th>Result</th><th>Time (s)</th></tr></thead>
+                                    <tbody>
+                                        <tr><td>Petersen (UNSAT)</td><td>10</td><td>UNSAT</td><td>UNSAT</td><td>0.00062 ✅</td></tr>
+                                        <tr><td>Tutte Graph (UNSAT)</td><td>46</td><td>UNSAT</td><td>UNSAT</td><td>0.03249 ✅</td></tr>
+                                        <tr><td>8x8 Grid (SAT)</td><td>64</td><td>SAT</td><td>SAT</td><td>0.00806 ✅</td></tr>
+                                        <tr><td>Complete K(15) (SAT)</td><td>15</td><td>SAT</td><td>SAT</td><td>0.00520 ✅</td></tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                                <p>For random dense graphs (n≈100–116) it consistently solves in 0.1–0.2s. Blazing fast for an exact solver.</p>
+                            `
+                        }
+                    ],
+                    selectedPost: null
+                };
+            },
+            methods: {
+                openPost(post) {
+                    this.selectedPost = post;
+                    scrollToTopInstant();
+                },
+                closePost() {
+                    this.selectedPost = null;
+                    scrollToTopInstant();
+                }
+            },
+            template: `
+                <section id="blog" class="container">
+                    <div class="projects-header" v-if="!selectedPost">
+                        <p class="mono">// BLOG_POSTS</p>
+                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Insights &amp; Discoveries</h2>
+                    </div>
 
-            <article class="p-card">
-                <i class="fas fa-book-open"></i>
-                <div class="p-title">Hadeeth.live <a href="https://www.hadeeth.live/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                <p class="p-desc">Large-scale text search engine. Optimized for rapid navigation through thousands of static data records with zero server lag.</p>
-                <div class="tag-list">
-                    <span class="tag">Performance</span><span class="tag">Tailwind</span><span class="tag">Static</span>
-                </div>
-            </article>
-        </div>
-    </section>
+                    <div v-if="!selectedPost" class="blog-grid">
+                        <div v-for="post in posts" :key="post.id" class="blog-card" @click="openPost(post)">
+                            <div class="date">{{ post.date }}</div>
+                            <h3>{{ post.title }}</h3>
+                            <p class="excerpt">{{ post.excerpt }}</p>
+                            <div style="margin-top:1.5rem; color:var(--primary); font-size:0.9rem; font-weight:600;">Read full →</div>
+                        </div>
+                    </div>
 
-    <footer>
-        <div class="container">
-            <p class="mono" style="margin-bottom: 2rem;">STATUS: OPEN_FOR_SYSTEMS_DESIGN</p>
-            <div class="footer-links">
-                <a href="https://github.com/mrkinix/">GITHUB</a>
-                <a href="mailto:hodhodbenchiboub@gmail.com">EMAIL</a>
-            </div>
-            <p style="color: #444; font-size: 0.75rem; letter-spacing: 1px;">&copy; 2026 PRECISION ENGINEERING. TUNISIA // BELGIUM.</p>
-        </div>
-    </footer>
+                    <div v-if="selectedPost" class="full-post">
+                        <button @click="closePost()" style="background:none;border:none;color:var(--text-dim);font-size:2rem;cursor:pointer;margin-bottom:1rem;">←</button>
+                        <h1>{{ selectedPost.title }}</h1>
+                        <div class="meta">By Hédi Ben Chiboub • {{ selectedPost.date }}</div>
+                        <div v-html="selectedPost.content"></div>
+                    </div>
+                </section>
+            `
+        };
 
+        const Gallery = {
+            template: `
+                <section id="gallery" class="container">
+                    <div class="projects-header">
+                        <p class="mono">// VISUAL_PORTFOLIO</p>
+                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Gallery</h2>
+                    </div>
+                    <div class="gallery-grid">
+                        <img src="https://picsum.photos/seed/541/600/800" alt="Project 1">
+                        <img src="https://picsum.photos/seed/540012597010123/600/800" alt="Project 1">
+                        <img src="https://picsum.photos/seed/bc2/600/400" alt="Project 2">
+                        <img src="https://picsum.photos/seed/bc3/600/700" alt="Project 3">
+                        <img src="https://picsum.photos/seed/bc4/600/500" alt="Project 4">
+                        <img src="https://picsum.photos/seed/bc5/600/800" alt="Project 5">
+                        <img src="https://picsum.photos/seed/bc6/600/450" alt="Project 6">
+                    </div>
+                </section>
+            `
+        };
+
+        const router = createRouter({
+            history: createWebHashHistory(),
+            routes: [
+                { path: '/', component: Home },
+                { path: '/blog', component: Blog },
+                { path: '/gallery', component: Gallery }
+            ]
+        });
+
+        // Scroll to top instantly on every route change
+        router.afterEach(() => {
+            scrollToTopInstant();
+        });
+
+        const app = createApp({
+            methods: {
+                scrollToProjects() {
+                    const el = document.getElementById('projects');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+            },
+            template: `
+                <header>
+                    <div class="container">
+                        <nav>
+                            <router-link to="/" class="logo">HEDI <span style="color:var(--primary)">BEN CHIBOUB</span></router-link>
+                            <div class="controls">
+                                <li>
+                                    <router-link to="/blog">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="currentColor" d="M13 0a2 2 0 0 1 2 2H6a2 2 0 0 0-2 2v12a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/><path fill="currentColor" d="M18 5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2zm-7 5H7V5h4zm5-4h-4V5h4zm0 2h-4V7h4zm0 2h-4V9h4zm0 2H7v-1h9zm0 2H7v-1h9zm0 2H7v-1h9z"/></svg>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/gallery">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18 8a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path fill="currentColor" fill-rule="evenodd" d="M11.943 1.25h.114c2.309 0 4.118 0 5.53.19c1.444.194 2.584.6 3.479 1.494c.895.895 1.3 2.035 1.494 3.48c.19 1.411.19 3.22.19 5.529v.088c0 1.909 0 3.471-.104 4.743c-.104 1.28-.317 2.347-.795 3.235q-.314.586-.785 1.057c-.895.895-2.035 1.3-3.48 1.494c-1.411.19-3.22.19-5.529.19h-.114c-2.309 0-4.118 0-5.53-.19c-1.444-.194-2.584-.6-3.479-1.494c-.793-.793-1.203-1.78-1.42-3.006c-.215-1.203-.254-2.7-.262-4.558Q1.25 12.792 1.25 12v-.058c0-2.309 0-4.118.19-5.53c.194-1.444.6-2.584 1.494-3.479c.895-.895 2.035-1.3 3.48-1.494c1.411-.19 3.22-.19 5.529-.19m-5.33 1.676c-1.278.172-2.049.5-2.618 1.069c-.57.57-.897 1.34-1.069 2.619c-.174 1.3-.176 3.008-.176 5.386v.844l1.001-.876a2.3 2.3 0 0 1 3.141.104l4.29 4.29a2 2 0 0 0 2.564.222l.298-.21a3 3 0 0 1 3.732.225l2.83 2.547c.286-.598.455-1.384.545-2.493c.098-1.205.099-2.707.099-4.653c0-2.378-.002-4.086-.176-5.386c-.172-1.279-.5-2.05-1.069-2.62c-.57-.569-1.34-.896-2.619-1.068c-1.3-.174-3.008-.176-5.386-.176s-4.086.002-5.386.176" clip-rule="evenodd"/></svg>
+                                    </router-link>
+                                </li>
+                            </div>
+                        </nav>
+                    </div>
+                </header>
+
+                <router-view @scroll-to-projects="scrollToProjects"></router-view>
+
+                <footer>
+                    <div class="container">
+                        <div class="footer-links">
+                            <a href="https://github.com/mrkinix/">GITHUB</a>
+                            <a href="mailto:hodhodbenchiboub@gmail.com">EMAIL</a>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:center; margin-bottom:2rem;">
+                            <span class="status-dot"></span>
+                            <p class="mono">STATUS: OPEN_FOR_HIRE/FREELANCE</p>
+                        </div>
+                        <div class="footer-flags">
+                            <!-- Tunisia flag -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 36 36"><path fill="#e70013" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4"/><circle cx="18" cy="18" r="6.5" fill="#fff"/><path fill="#e70013" d="M15.4 18a3.9 3.9 0 0 1 6.541-2.869a4.875 4.875 0 1 0 0 5.738A3.9 3.9 0 0 1 15.4 18"/><path fill="#e70013" d="m19.645 16.937l-1.249-1.719v2.125L16.375 18l2.021.657v2.125l1.249-1.719l2.021.656L20.417 18l1.249-1.719z"/></svg>
+                            <!-- Belgium flag -->
+                            <svg class="flag-svg" viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="32" height="22" fill="#F5D802"/>
+                                <rect width="10.67" height="22" fill="#1E1E1E"/>
+                                <rect x="21.33" width="10.67" height="22" fill="#E50000"/>
+                            </svg>
+                            2026 © Ben Chiboub. All rights reserved.
+                        </div>
+                    </div>
+                </footer>
+            `
+        });
+
+        app.use(router);
+        app.mount('#app');
+    </script>
 </body>
 </html>
