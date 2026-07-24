@@ -1,482 +1,893 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ben Chiboub | Systems Engineer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #030303;
-            --topbar: #030303ac;
-            --surface: #0a0a0a;
-            --primary: #10b981;
-            --text-main: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: #1e293b;
-            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-            --section-spacer: clamp(8rem, 15vh, 14rem);
-            --content-width: 1000px;
-            --text-width: 700px;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #ffffff;
-                --topbar: #ffffffac;
-                --surface: #f8f9fa;
-                --primary: #059669;
-                --text-main: #0f172a;
-                --text-dim: #475569;
-                --border: #e2e8f0;
-            }
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: auto; font-size: 16px; }
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            line-height: 1.8;
-            -webkit-font-smoothing: antialiased;
-        }
-        .container {
-            max-width: var(--content-width);
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-        header {
-            position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: var(--topbar); backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(30, 41, 59, 0.5);
-        }
-        nav { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        .logo { font-weight: 800; color: var(--text-main); text-decoration: none; font-size: 1rem; letter-spacing: -0.5px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hédi Ben Chiboub — mrkinix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12141a;
+    --bg-alt: #181b22;
+    --surface: #1d2029;
+    --surface-hover: #232733;
+    --border: #2a2e38;
+    --text: #edebe4;
+    --text-dim: #8b909b;
+    --text-faint: #565b66;
+    --accent: #4fd1c5;
+    --accent-dim: #4fd1c526;
+    --accent-2: #e0a458;
+    --accent-2-dim: #e0a45822;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', -apple-system, sans-serif;
+    --radius: 3px;
+    --max: 900px;
+  }
 
-        .controls { display: flex; gap: 1.5rem; align-items: center; list-style: none; }
-        .controls a { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 500; transition: var(--transition); }
-        .controls a:hover { color: var(--primary); }
+  html[data-theme="light"]{
+    --bg: #f7f7f5;
+    --bg-alt: #ffffff;
+    --surface: #ffffff;
+    --surface-hover: #f0f0ee;
+    --border: #e0e0dc;
+    --text: #1b1d22;
+    --text-dim: #5c6068;
+    --text-faint: #9297a0;
+    --accent: #12968c;
+    --accent-dim: #12968c1a;
+    --accent-2: #b8762a;
+    --accent-2-dim: #b8762a1a;
+  }
 
-        section { padding: var(--section-spacer) 0; }
-        .hero { text-align: center; display: flex; margin-top: 10rem; margin-bottom: 10rem; flex-direction: column; align-items: center; }
-        h1 {
-            font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 900;
-            line-height: 1.1; margin-bottom: 2rem; letter-spacing: -0.04em;
-            max-width: var(--text-width); margin-left: auto; margin-right: auto;
-        }
-        .subtitle {
-            font-size: 1.25rem; color: var(--text-dim); margin-bottom: 3rem;
-            max-width: var(--text-width); margin-left: auto; margin-right: auto;
-        }
-        .btn-group { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            padding: 1rem 2.5rem; border-radius: 100px; font-weight: 600;
-            text-decoration: none; transition: var(--transition); font-size: 0.95rem;
-            cursor: pointer; border: none;
-        }
-        .btn-p { background: var(--primary); color: #000; }
-        .btn-s { border: 1px solid var(--text-main); color: var(--text-main); background: transparent; }
-        .btn:hover { transform: scale(1.05); box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.4); }
+  html[data-theme="reading"]{
+    --bg: #f4ecd8;
+    --bg-alt: #faf3e3;
+    --surface: #faf3e3;
+    --surface-hover: #f0e6cd;
+    --border: #ddd0af;
+    --text: #3a3226;
+    --text-dim: #6b6250;
+    --text-faint: #948a72;
+    --accent: #8a6d1f;
+    --accent-dim: #8a6d1f1a;
+    --accent-2: #a1552d;
+    --accent-2-dim: #a1552d1a;
+  }
 
-        /* Stack Section */
-        .stack-section { padding: 4rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-        .stack-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 2rem; margin-top: 3rem;
-        }
-        .stack-item { text-align: center; transition: var(--transition); }
-        .stack-item i { font-size: 2.5rem; display: block; margin-bottom: 1rem; color: var(--text-dim); transition: var(--transition); }
-        .stack-item span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; }
-        .stack-item:hover i { color: var(--primary); transform: translateY(-5px); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
 
-        /* Mobile horizontal scroll for stack */
-        @media (max-width: 768px) {
-            .stack-grid {
-                display: flex;
-                flex-direction: row;
-                overflow-x: auto;
-                gap: 0;
-                margin-top: 2rem;
-                padding-bottom: 0.75rem;
-                scrollbar-width: thin;
-                scrollbar-color: var(--border) transparent;
-                -webkit-overflow-scrolling: touch;
-            }
-            .stack-grid::-webkit-scrollbar { height: 3px; }
-            .stack-grid::-webkit-scrollbar-track { background: transparent; }
-            .stack-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-            .stack-item {
-                flex: 0 0 120px;
-                padding: 0 1rem;
-            }
-        }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .2s ease, color .2s ease;
+  }
 
-        /* Projects */
-        .projects-header { margin-top: 10rem; margin-bottom: 5rem; text-align: center; }
-        .project-grid { display: grid; grid-template-columns: 1fr; gap: 4rem; }
-        @media (min-width: 1024px) { .project-grid { grid-template-columns: 1fr 1fr; } }
-        .p-card {
-            border-radius: 24px; padding: 3rem; transition: var(--transition);
-        }
-        .p-card:hover { border-color: var(--primary); transform: translateY(-10px); }
-        .p-card > i { font-size: 1.5rem; color: var(--primary); margin-bottom: 2rem; display: block; }
-        .p-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        .p-desc { color: var(--text-dim); margin-bottom: 2rem; font-size: 1.05rem; }
-        .tag-list { display: flex; flex-wrap: wrap; gap: 0.8rem; }
-        .tag {
-            font-family: var(--font-mono); font-size: 0.7rem; color: var(--primary);
-            background: rgba(16, 185, 129, 0.05); padding: 0.4rem 1rem;
-            border-radius: 50px; border: 1px solid rgba(16, 185, 129, 0.2);
-        }
+  body::before{
+    content:"";
+    position: fixed;
+    inset:0;
+    pointer-events:none;
+    z-index: 1;
+    background-image:
+      radial-gradient(circle at 15% 8%, var(--accent-dim), transparent 40%),
+      radial-gradient(circle at 85% 92%, var(--accent-2-dim), transparent 45%);
+  }
 
-        /* Blog */
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        .blog-card {
-            border-radius: 20px; padding: 2rem; cursor: pointer;
-            transition: var(--transition);
-        }
-        .blog-card:hover { transform: translateY(-8px); border-color: var(--primary); }
-        .blog-card .date { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); }
-        .blog-card h3 { margin: 1rem 0; font-size: 1.4rem; }
-        .blog-card .excerpt { color: var(--text-dim); font-size: 1.05rem; }
+  a{ color: var(--accent); text-decoration:none; }
+  a:hover{ text-decoration: underline; }
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
 
-        /* Full Blog Post */
-        .full-post {
-            max-width: 720px;
-            margin: 4rem auto;
-            margin-top: 8rem;
-            padding: 2rem;
-            border-radius: 24px;
-        }
-        .full-post h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 1.5rem; }
-        .full-post .meta { font-size: 1rem; color: var(--text-dim); margin-bottom: 3rem; }
+  ::selection{ background: var(--accent); color: var(--bg); }
 
-        /* Table: scroll only the table, not the page */
-        .full-post .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin: 2rem 0;
-            border-radius: 8px;
-        }
-        .full-post table {
-            width: 100%;
-            min-width: 500px;
-            border-collapse: collapse;
-        }
-        .full-post th, .full-post td { border: 1px solid var(--border); padding: 1rem; text-align: left; }
-        .full-post th { background: var(--bg); }
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+    z-index: 2;
+  }
 
-        @media (max-width: 768px) {
-            .full-post {
-                margin: 1rem 0;
-                padding: 1rem;
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
-            }
-            .full-post h1 { font-size: 1.8rem; }
-        }
+  /* ---------- NAV ---------- */
+  header.nav{
+    position: sticky;
+    top:0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 14px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family: var(--mono);
+    font-size: 13px;
+    gap: 16px;
+  }
+  .nav-left{ display:flex; align-items:center; gap:10px; }
+  .nav-avatar{
+    width: 26px; height:26px; border-radius:50%;
+    border: 1px solid var(--border);
+    object-fit: cover;
+  }
+  .nav-brand{ color: var(--text); font-weight:600; letter-spacing: 0.02em; }
+  .nav-brand span{ color: var(--accent); }
+  .nav-right{ display:flex; align-items:center; gap:20px; }
+  .nav-links{ display:flex; gap:22px; list-style:none; }
+  .nav-links a{ color: var(--text-dim); transition: color .15s ease; }
+  .nav-links a:hover{ color: var(--accent); text-decoration:none; }
 
-        /* Gallery */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; }
-        .gallery-grid img {
-            width: 100%; height: auto; border-radius: 16px;
-            transition: var(--transition); object-fit: cover;
-        }
-        .gallery-grid img:hover { transform: scale(1.04); }
+  .theme-toggle{
+    display:flex;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow:hidden;
+    font-family: var(--mono);
+  }
+  .theme-btn{
+    background: transparent;
+    border:none;
+    color: var(--text-faint);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 6px 10px;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .theme-btn.active{ background: var(--accent); color: var(--bg); }
+  .theme-btn:hover:not(.active){ color: var(--text); }
 
-        /* Footer */
-        footer { padding: 8rem 0; text-align: center; background: var(--bg); }
-        .mono { font-family: var(--font-mono); color: var(--primary); font-size: 0.8rem; letter-spacing: 2px; }
-        .footer-links { display: flex; justify-content: center; gap: 4rem; margin: 3rem 0; }
-        .footer-links a { color: var(--text-dim); text-decoration: none; transition: var(--transition); }
-        .footer-links a:hover { color: var(--primary); }
+  @media (max-width: 640px){ .nav-links{ display:none; } }
 
-        /* Blinking green dot */
-        .status-dot {
-            display: inline-block;
-            width: 8px; height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            margin-right: 8px;
-            vertical-align: middle;
-            animation: blink 1.4s ease-in-out infinite;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
-            50% { opacity: 0.3; box-shadow: 0 0 0 4px rgba(16,185,129,0); }
-        }
+  /* ---------- HERO / TERMINAL ---------- */
+  .hero{ padding: 64px 0 56px; }
+  .hero-top{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .avatar{
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    object-fit: cover;
+  }
+  .eyebrow{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .flag{ margin-left:6px; }
 
-        /* Country flags in footer */
-        .footer-flags {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1.5rem;
-            opacity: 0.36;
-        }
-        .flag-svg {
-            width: 32px;
-            height: 22px;
-            border-radius: 3px;
-            overflow: hidden;
-            display: inline-block;
-            vertical-align: middle;
-        }
+  .terminal{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow: 0 24px 60px -30px rgba(0,0,0,0.45);
+  }
+  .terminal-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding: 11px 14px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; background: var(--border); }
+  .terminal-title{
+    margin-left: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  .terminal-hint{
+    margin-left:auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .terminal-body{
+    padding: 26px 26px 20px;
+    font-family: var(--mono);
+    font-size: 15px;
+  }
+  .terminal-body .prompt{ color: var(--text-faint); }
+  .terminal-body .cmd{ color: var(--text); }
+  .terminal-line{ margin-bottom: 6px; white-space: pre-wrap; }
+  .out-name{
+    font-size: clamp(26px, 5vw, 40px);
+    font-weight: 800;
+    color: var(--text);
+    margin: 14px 0 6px;
+    line-height:1.15;
+    letter-spacing: -0.01em;
+  }
+  .out-name .handle{ color: var(--accent); }
+  .out-role{
+    color: var(--text-dim);
+    font-size: 15px;
+    margin-bottom: 16px;
+  }
 
-        @media (max-width: 768px) {
-            :root { --section-spacer: 6rem; }
-            .nav-links { display: none; }
-            .controls { gap: 1rem; }
-        }
-    </style>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+  /* interactive input line */
+  .term-input-row{
+    display:flex;
+    align-items:center;
+    margin-top: 18px;
+    position: relative;
+  }
+  .term-input-row .prompt{ white-space:nowrap; }
+  .term-input-wrap{ position:relative; flex:1; margin-left:8px; }
+  #termInput{
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    width: 100%;
+    caret-color: var(--accent);
+  }
+  #termInput:focus{ outline:none; }
+  .ghost{
+    position:absolute;
+    left:0; top:0;
+    font-family: var(--mono);
+    font-size:15px;
+    color: var(--text-faint);
+    pointer-events:none;
+    white-space: pre;
+  }
+  .ghost .typed{ color: transparent; }
+
+  .intellisense{
+    position:absolute;
+    top: 28px; left:8px;
+    z-index: 20;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    min-width: 220px;
+    box-shadow: 0 14px 30px -12px rgba(0,0,0,0.5);
+    overflow:hidden;
+    display:none;
+  }
+  .intellisense.open{ display:block; }
+  .intellisense-item{
+    padding: 8px 12px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .intellisense-item .desc{ color: var(--text-faint); font-size:11px; }
+  .intellisense-item.sel, .intellisense-item:hover{
+    background: var(--accent-dim);
+    color: var(--text);
+  }
+  .term-output{
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    font-family: var(--mono);
+    font-size: 13.5px;
+    color: var(--text-dim);
+    display:none;
+  }
+  .term-output.show{ display:block; }
+  .term-output .echoed{ color: var(--text-faint); margin-bottom:8px; }
+  .term-output .echoed b{ color: var(--accent); }
+  .qa-item{ margin-bottom: 12px; }
+  .qa-item .q{ color: var(--text); font-weight:600; }
+  .qa-item .a{ color: var(--text-dim); }
+
+  .out-tags{ display:flex; flex-wrap:wrap; gap:8px; margin-top: 14px; }
+  .tag{
+    font-size: 12px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-dim);
+    background: var(--bg-alt);
+  }
+
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; margin-top: 26px; }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 11px 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: transparent;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .btn:hover{ border-color: var(--accent); color: var(--accent); text-decoration:none; }
+  .btn.primary{
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight:600;
+  }
+  .btn.primary:hover{ opacity:0.88; color: var(--bg); }
+
+  /* ---------- STATS ---------- */
+  .stats{ border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 26px 0; }
+  .stats-row{ display:grid; grid-template-columns: repeat(4, 1fr); text-align:center; }
+  .stat + .stat{ border-left: 1px solid var(--border); }
+  .stat-num{ font-family: var(--mono); font-size: 24px; font-weight:700; color: var(--accent); }
+  .stat-label{ font-size: 11.5px; color: var(--text-dim); margin-top: 4px; letter-spacing: 0.03em; }
+  @media (max-width: 640px){
+    .stats-row{ grid-template-columns: repeat(2, 1fr); row-gap: 18px; }
+    .stat:nth-child(3){ border-left:none; }
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding: 60px 0; }
+  .section-head{ display:flex; align-items:baseline; gap: 12px; margin-bottom: 30px; }
+  .section-head .path{ font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
+  .section-head h2{ font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .rule{ flex:1; height:1px; background: var(--border); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+  .about-text p{ color: var(--text-dim); margin-bottom: 14px; max-width: 54ch; }
+  .about-text p strong{ color: var(--text); font-weight:600; }
+  .quote-block{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 2px solid var(--accent-2);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    line-height: 1.85;
+  }
+  .quote-block span{ color: var(--text-faint); }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow:hidden;
+  }
+  .skill-card{ background: var(--bg-alt); padding: 22px; }
+  .skill-card.featured{ background: var(--accent-dim); }
+  .skill-card h3{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .skill-card .sub{ font-size:11px; color: var(--text-faint); margin-bottom:12px; }
+  .skill-card ul{ list-style:none; }
+  .skill-card li{
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .skill-card li:last-child{ border-bottom:none; }
+  .skill-card li b{ color: var(--text); font-weight:600; }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-list{ display:flex; flex-direction:column; gap:14px; }
+  .edu-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 22px;
+  }
+  .edu-item .edu-title{ font-weight:600; }
+  .edu-item .edu-sub{ color: var(--text-dim); font-size: 14px; margin-top:2px; }
+  .edu-item .edu-score{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-2);
+    white-space:nowrap;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 720px){ .projects{ grid-template-columns: 1fr; } }
+
+  .project-card{
+    display:block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 22px;
+    transition: border-color .15s ease, transform .15s ease;
+    color: inherit;
+  }
+  .project-card:hover{ border-color: var(--accent); transform: translateY(-2px); text-decoration:none; }
+  .proj-top{ display:flex; align-items:flex-start; justify-content:space-between; gap: 10px; margin-bottom: 10px; }
+  .proj-name{ font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); }
+  .project-card:hover .proj-name{ color: var(--accent); }
+  .proj-stars{ font-family: var(--mono); font-size: 12px; color: var(--accent-2); white-space:nowrap; }
+  .proj-desc{ color: var(--text-dim); font-size: 14px; margin-bottom: 16px; min-height: 42px; }
+  .proj-lang{ display:flex; align-items:center; gap:6px; font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
+  .lang-dot{ width:8px; height:8px; border-radius:50%; }
+  .lang-rust{ background:#dea584; }
+  .lang-vue{ background:#42b883; }
+  .lang-js{ background:#f1e05a; }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{ text-align:center; padding: 66px 0 40px; }
+  .contact h2{ font-size: clamp(24px, 4vw, 34px); margin-bottom: 14px; letter-spacing: -0.01em; }
+  .contact p{ color: var(--text-dim); max-width: 46ch; margin: 0 auto 30px; }
+  .contact-actions{ display:flex; justify-content:center; flex-wrap:wrap; gap: 12px; }
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 24px 0 40px;
+    text-align:center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-faint);
+  }
+  footer .prompt-end{ color: var(--accent); }
+
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background: var(--bg); }
+  ::-webkit-scrollbar-thumb{ background: var(--border); border-radius:10px; }
+</style>
 </head>
 <body>
-    <div id="app"></div>
 
-    <script>
-        const { createApp } = Vue;
-        const { createRouter, createWebHashHistory } = VueRouter;
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <img class="nav-avatar" src="https://avatars.githubusercontent.com/u/33890874?v=4" alt="Hédi Ben Chiboub avatar">
+      <div class="nav-brand">hedi<span>@</span>mrkinix</div>
+    </div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+      <div class="theme-toggle" role="group" aria-label="Theme">
+        <button class="theme-btn active" data-theme-btn="dark" title="Dark mode">●</button>
+        <button class="theme-btn" data-theme-btn="light" title="Light mode">○</button>
+        <button class="theme-btn" data-theme-btn="reading" title="Reading mode">▤</button>
+      </div>
+    </div>
+  </div>
+</header>
 
-        // Disable smooth scroll on route changes
-        function scrollToTopInstant() {
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }
+<main class="wrap">
 
-        const Home = {
-            emits: ['scroll-to-projects'],
-            template: `
-                <section class="container hero">
-                    <p class="mono">// SYSTEMS ARCHITECT</p>
-                    <h1>Architecting <span style="color:var(--primary)">Private</span>, Local-First Intelligence.</h1>
-                    <p class="subtitle">Engineering high-performance Vue.js components and offline AI integration. Focusing on data sovereignty and zero-latency UX since 2019.</p>
-                    <div class="btn-group">
-                        <button @click="$emit('scroll-to-projects')" class="btn btn-p">View Production</button>
-                        <a href="mailto:hodhodbenchiboub@gmail.com" class="btn btn-s">Direct Line</a>
-                    </div>
-                </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-top">
+      <img class="avatar" src="https://avatars.githubusercontent.com/u/33890874?v=4" alt="Hédi Ben Chiboub">
+      <div class="eyebrow">Portfolio · CV <span class="flag">🇧🇪</span></div>
+    </div>
 
-                <section id="stack" class="stack-section">
-                    <div class="container">
-                        <p class="mono" style="text-align:center;">// CORE_ENGINE_STACK</p>
-                        <div class="stack-grid">
-                            <div class="stack-item"><i class="fab fa-vuejs"></i><span>Vue</span></div>
-                            <div class="stack-item"><i class="fab fa-python"></i><span>Python</span></div>
-                            <div class="stack-item"><i class="fab fa-node-js"></i><span>Node.js</span></div>
-                            <div class="stack-item"><i class="fas fa-code"></i><span>C++</span></div>
-                            <div class="stack-item"><i class="fab fa-rust"></i><span>Rust</span></div>
-                        </div>
-                    </div>
-                </section>
+    <div class="terminal">
+      <div class="terminal-body">
+        <div class="out-name">Hédi Ben Chiboub <span class="handle">// mrkinix</span></div>
+        <div class="out-role">Software &amp; Systems Engineer — Rust, performance-minded builds, privacy-first tooling</div>
+        <div class="out-tags">
+          <span class="tag">Vue.js</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">Rust</span>
+          <span class="tag">AI Engineering</span>
+          <span class="tag">Privacy</span>
+        </div>
 
-                <section id="projects" class="container">
-                    <div class="projects-header">
-                        <p class="mono">// DEPLOYED_WORK</p>
-                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Selected Projects</h2>
-                    </div>
-                    <div class="project-grid">
-                        <article class="p-card">
-                            <i class="fas fa-music"></i>
-                            <div class="p-title">BlockTheBeat <a href="https://www.blockthebeat.com/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                            <p class="p-desc">Deep-focus audio engine. Uses local AI models to isolate and strip background frequencies directly on the device hardware.</p>
-                            <div class="tag-list">
-                                <span class="tag">AI Inference</span><span class="tag">Electron</span><span class="tag">Vite</span>
-                            </div>
-                        </article>
-                        <article class="p-card">
-                            <i class="fas fa-brain"></i>
-                            <div class="p-title">Lunate.ai <a href="https://www.lunate.ai/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                            <p class="p-desc">A device-native AI orchestrator. Engineered for total data sovereignty, running complex LLMs without cloud dependencies.</p>
-                            <div class="tag-list">
-                                <span class="tag">WASM</span><span class="tag">LLM Ops</span><span class="tag">Offline-First</span>
-                            </div>
-                        </article>
-                        <article class="p-card">
-                            <i class="fas fa-tasks"></i>
-                            <div class="p-title">Yawmi.live <a href="https://www.todo.yawmi.live/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                            <p class="p-desc">High-frequency task management. Minimalist PWA designed for zero-latency interactions and 100% persistent offline state.</p>
-                            <div class="tag-list">
-                                <span class="tag">Vue 3</span><span class="tag">PWA</span><span class="tag">UX Engineering</span>
-                            </div>
-                        </article>
-                        <article class="p-card">
-                            <i class="fas fa-sitemap"></i>
-                            <div class="p-title">BCcarver <a href="https://github.com/mrkinix/BCcarver/" target="_blank"><i class="fas fa-arrow-up-right-from-square" style="font-size:0.8rem;"></i></a></div>
-                            <p class="p-desc">Proactive constraint solver for Hamiltonian cycles. Rust implementation with backtracking, heuristics, memoization &amp; advanced filters.</p>
-                            <div class="tag-list">
-                                <span class="tag">Rust</span><span class="tag">Graph Theory</span><span class="tag">Algorithms</span>
-                            </div>
-                        </article>
-                    </div>
-                </section>
-            `
-        };
+      </div>
+    </div>
 
-        const Blog = {
-            data() {
-                return {
-                    posts: [
-                        {
-                            id: 1,
-                            title: "Unveiling Ben Chiboub Carver (BCC): My Journey to a Faster Hamiltonian Cycle Solver",
-                            date: "March 05, 2026",
-                            excerpt: "An independent Rust implementation of a proactive constraint-based solver that crushes dense random graphs near the Hamiltonicity threshold.",
-                            content: `
-                                <h3>What is the Hamiltonian Cycle Problem?</h3>
-                                <p>Imagine you're planning a road trip that visits every city exactly once and returns home—that's a Hamiltonian cycle in graph terms. Graphs model everything from social networks to DNA sequencing, but finding such cycles is NP-complete: super hard for large graphs.</p>
-                                <p>I stumbled into this while tinkering with graph puzzles. Frustrated by slow backtracking, I built a "carving" approach: proactively lock essential edges and delete impossible ones using constraint propagation, articulation-point filters, and memoization.</p>
-                                
-                                <h3>The Proof is in the Performance</h3>
-                                <div class="table-wrapper">
-                                <table>
-                                    <thead><tr><th>Adversarial Case</th><th>N</th><th>Expected</th><th>Result</th><th>Time (s)</th></tr></thead>
-                                    <tbody>
-                                        <tr><td>Petersen (UNSAT)</td><td>10</td><td>UNSAT</td><td>UNSAT</td><td>0.00062 ✅</td></tr>
-                                        <tr><td>Tutte Graph (UNSAT)</td><td>46</td><td>UNSAT</td><td>UNSAT</td><td>0.03249 ✅</td></tr>
-                                        <tr><td>8x8 Grid (SAT)</td><td>64</td><td>SAT</td><td>SAT</td><td>0.00806 ✅</td></tr>
-                                        <tr><td>Complete K(15) (SAT)</td><td>15</td><td>SAT</td><td>SAT</td><td>0.00520 ✅</td></tr>
-                                    </tbody>
-                                </table>
-                                </div>
-                                <p>For random dense graphs (n≈100–116) it consistently solves in 0.1–0.2s. Blazing fast for an exact solver.</p>
-                            `
-                        }
-                    ],
-                    selectedPost: null
-                };
-            },
-            methods: {
-                openPost(post) {
-                    this.selectedPost = post;
-                    scrollToTopInstant();
-                },
-                closePost() {
-                    this.selectedPost = null;
-                    scrollToTopInstant();
-                }
-            },
-            template: `
-                <section id="blog" class="container">
-                    <div class="projects-header" v-if="!selectedPost">
-                        <p class="mono">// BLOG_POSTS</p>
-                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Insights &amp; Discoveries</h2>
-                    </div>
+    <div class="hero-actions">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="https://github.com/mrkinix" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="https://benchiboub.com" target="_blank" rel="noopener">benchiboub.com ↗</a>
+    </div>
+  </section>
 
-                    <div v-if="!selectedPost" class="blog-grid">
-                        <div v-for="post in posts" :key="post.id" class="blog-card" @click="openPost(post)">
-                            <div class="date">{{ post.date }}</div>
-                            <h3>{{ post.title }}</h3>
-                            <p class="excerpt">{{ post.excerpt }}</p>
-                            <div style="margin-top:1.5rem; color:var(--primary); font-size:0.9rem; font-weight:600;">Read full →</div>
-                        </div>
-                    </div>
+  <!-- STATS -->
+  <section class="stats" style="padding-top:0; padding-bottom:26px;">
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">15</div>
+        <div class="stat-label">Repositories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">21</div>
+        <div class="stat-label">Stars earned</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statYears">—</div>
+        <div class="stat-label">Years coding</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" id="statAge">—</div>
+        <div class="stat-label">Years old</div>
+      </div>
+    </div>
+  </section>
 
-                    <div v-if="selectedPost" class="full-post">
-                        <button @click="closePost()" style="background:none;border:none;color:var(--text-dim);font-size:2rem;cursor:pointer;margin-bottom:1rem;">←</button>
-                        <h1>{{ selectedPost.title }}</h1>
-                        <div class="meta">By Hédi Ben Chiboub • {{ selectedPost.date }}</div>
-                        <div v-html="selectedPost.content"></div>
-                    </div>
-                </section>
-            `
-        };
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-head">
+      <span class="path">~/about</span>
+      <div class="rule"></div>
+      <h2>About</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Hédi</strong>, working under the handle <strong>mrkinix</strong> — a <strong id="aboutAge">25</strong>-year-old Belgian software engineer at <strong>BC software</strong>, currently working from home. My focus sits at the intersection of <strong>minimalism, privacy, and open source</strong>: software that does one thing, does it fast, and doesn't phone home.</p>
+        <p>Full-stack development is my daily driver — <strong>Vue.js</strong> and <strong>Node.js</strong> end to end — with <strong>Rust</strong> reserved for anything performance-critical: custom sorting algorithms, exact solvers, small sharp tools. I also lean heavily into <strong>vibe coding</strong> and <strong>AI engineering</strong>, wiring up LLM APIs and configuring models to speed up how I build.</p>
+        <p>Coding since <strong>2017</strong>, I studied Computer Science at the <strong>Université Libre de Bruxelles</strong>. Outside of code, I also work across <strong>Photoshop</strong> and <strong>After Effects</strong> when a project needs a visual or motion touch.</p>
+      </div>
+      <div class="quote-block">
+        <span>// bio.txt</span><br>
+        "Minimalism x privacy x open source;"<br><br>
+        <span>nationality:</span> Belgian 🇧🇪<br>
+        <span>location:</span> working from home<br>
+        <span>org:</span> BC software<br>
+        <span>site:</span> benchiboub.com<br>
+        <span>coding since:</span> 2017
+      </div>
+    </div>
+  </section>
 
-        const Gallery = {
-            template: `
-                <section id="gallery" class="container">
-                    <div class="projects-header">
-                        <p class="mono">// VISUAL_PORTFOLIO</p>
-                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Gallery</h2>
-                    </div>
-                    <div class="gallery-grid">
-                        <img src="https://picsum.photos/seed/541/600/800" alt="Project 1">
-                        <img src="https://picsum.photos/seed/540012597010123/600/800" alt="Project 1">
-                        <img src="https://picsum.photos/seed/bc2/600/400" alt="Project 2">
-                        <img src="https://picsum.photos/seed/bc3/600/700" alt="Project 3">
-                        <img src="https://picsum.photos/seed/bc4/600/500" alt="Project 4">
-                        <img src="https://picsum.photos/seed/bc5/600/800" alt="Project 5">
-                        <img src="https://picsum.photos/seed/bc6/600/450" alt="Project 6">
-                    </div>
-                </section>
-            `
-        };
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="path">~/skills</span>
+      <div class="rule"></div>
+      <h2>Skills &amp; focus</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card featured">
+        <h3>Full-stack — main focus</h3>
+        <div class="sub">daily driver</div>
+        <ul>
+          <li><b>Vue.js</b></li>
+          <li><b>Node.js</b></li>
+          <li>REST / API design</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Vibe coding &amp; AI engineering</h3>
+        <div class="sub">building fast, with AI in the loop</div>
+        <ul>
+          <li>LLM API integration &amp; configuration</li>
+          <li>Prompt / agent design</li>
+          <li>Rapid AI-assisted prototyping</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Systems &amp; algorithms</h3>
+        <div class="sub">where Rust comes in</div>
+        <ul>
+          <li>Rust</li>
+          <li>Python · C++</li>
+          <li>React · Unreal Engine 5</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Design</h3>
+        <div class="sub">visual &amp; motion</div>
+        <ul>
+          <li>Adobe Photoshop</li>
+          <li>Adobe After Effects</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        const router = createRouter({
-            history: createWebHashHistory(),
-            routes: [
-                { path: '/', component: Home },
-                { path: '/blog', component: Blog },
-                { path: '/gallery', component: Gallery }
-            ]
-        });
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-head">
+      <span class="path">~/education</span>
+      <div class="rule"></div>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div>
+          <div class="edu-title">BSc Computer Science</div>
+          <div class="edu-sub">Université Libre de Bruxelles (ULB)</div>
+        </div>
+        <div class="edu-score">2020 →</div>
+      </div>
+      <div class="edu-item">
+        <div>
+          <div class="edu-title">Baccalauréat, Mathematics</div>
+          <div class="edu-sub">2020</div>
+        </div>
+        <div class="edu-score">14.46 / 60</div>
+      </div>
+    </div>
+  </section>
 
-        // Scroll to top instantly on every route change
-        router.afterEach(() => {
-            scrollToTopInstant();
-        });
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head">
+      <span class="path">~/projects</span>
+      <div class="rule"></div>
+      <h2>Selected work</h2>
+    </div>
+    <div class="projects">
 
-        const app = createApp({
-            methods: {
-                scrollToProjects() {
-                    const el = document.getElementById('projects');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }
-            },
-            template: `
-                <header>
-                    <div class="container">
-                        <nav>
-                            <router-link to="/" class="logo">HEDI <span style="color:var(--primary)">BEN CHIBOUB</span></router-link>
-                            <div class="controls">
-                                <li>
-                                    <router-link to="/blog">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="currentColor" d="M13 0a2 2 0 0 1 2 2H6a2 2 0 0 0-2 2v12a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/><path fill="currentColor" d="M18 5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2zm-7 5H7V5h4zm5-4h-4V5h4zm0 2h-4V7h4zm0 2h-4V9h4zm0 2H7v-1h9zm0 2H7v-1h9zm0 2H7v-1h9z"/></svg>
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/gallery">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18 8a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path fill="currentColor" fill-rule="evenodd" d="M11.943 1.25h.114c2.309 0 4.118 0 5.53.19c1.444.194 2.584.6 3.479 1.494c.895.895 1.3 2.035 1.494 3.48c.19 1.411.19 3.22.19 5.529v.088c0 1.909 0 3.471-.104 4.743c-.104 1.28-.317 2.347-.795 3.235q-.314.586-.785 1.057c-.895.895-2.035 1.3-3.48 1.494c-1.411.19-3.22.19-5.529.19h-.114c-2.309 0-4.118 0-5.53-.19c-1.444-.194-2.584-.6-3.479-1.494c-.793-.793-1.203-1.78-1.42-3.006c-.215-1.203-.254-2.7-.262-4.558Q1.25 12.792 1.25 12v-.058c0-2.309 0-4.118.19-5.53c.194-1.444.6-2.584 1.494-3.479c.895-.895 2.035-1.3 3.48-1.494c1.411-.19 3.22-.19 5.529-.19m-5.33 1.676c-1.278.172-2.049.5-2.618 1.069c-.57.57-.897 1.34-1.069 2.619c-.174 1.3-.176 3.008-.176 5.386v.844l1.001-.876a2.3 2.3 0 0 1 3.141.104l4.29 4.29a2 2 0 0 0 2.564.222l.298-.21a3 3 0 0 1 3.732.225l2.83 2.547c.286-.598.455-1.384.545-2.493c.098-1.205.099-2.707.099-4.653c0-2.378-.002-4.086-.176-5.386c-.172-1.279-.5-2.05-1.069-2.62c-.57-.569-1.34-.896-2.619-1.068c-1.3-.174-3.008-.176-5.386-.176s-4.086.002-5.386.176" clip-rule="evenodd"/></svg>
-                                    </router-link>
-                                </li>
-                            </div>
-                        </nav>
-                    </div>
-                </header>
+      <a class="project-card" href="https://github.com/mrkinix/BCsort" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <div class="proj-name">BCsort</div>
+          <div class="proj-stars">★ 2</div>
+        </div>
+        <div class="proj-desc">A high-performance, in-place ternary distribution sort in Rust, achieving O(N log N) scaling via statistical threshold partitioning.</div>
+        <div class="proj-lang"><span class="lang-dot lang-rust"></span> Rust</div>
+      </a>
 
-                <router-view @scroll-to-projects="scrollToProjects"></router-view>
+      <a class="project-card" href="https://github.com/mrkinix/BCTravel" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <div class="proj-name">BCTravel</div>
+          <div class="proj-stars">★ 1</div>
+        </div>
+        <div class="proj-desc">An exact TSP solver in Rust — under 40 nodes in less than 0.4 seconds, scaling correctly well beyond 75 nodes.</div>
+        <div class="proj-lang"><span class="lang-dot lang-rust"></span> Rust</div>
+      </a>
 
-                <footer>
-                    <div class="container">
-                        <div class="footer-links">
-                            <a href="https://github.com/mrkinix/">GITHUB</a>
-                            <a href="mailto:hodhodbenchiboub@gmail.com">EMAIL</a>
-                        </div>
-                        <div style="display:flex; align-items:center; justify-content:center; margin-bottom:2rem;">
-                            <span class="status-dot"></span>
-                            <p class="mono">STATUS: OPEN_FOR_HIRE/FREELANCE</p>
-                        </div>
-                        <div class="footer-flags">
-                            <!-- Tunisia flag -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 36 36"><path fill="#e70013" d="M32 5H4a4 4 0 0 0-4 4v18a4 4 0 0 0 4 4h28a4 4 0 0 0 4-4V9a4 4 0 0 0-4-4"/><circle cx="18" cy="18" r="6.5" fill="#fff"/><path fill="#e70013" d="M15.4 18a3.9 3.9 0 0 1 6.541-2.869a4.875 4.875 0 1 0 0 5.738A3.9 3.9 0 0 1 15.4 18"/><path fill="#e70013" d="m19.645 16.937l-1.249-1.719v2.125L16.375 18l2.021.657v2.125l1.249-1.719l2.021.656L20.417 18l1.249-1.719z"/></svg>
-                            <!-- Belgium flag -->
-                            <svg class="flag-svg" viewBox="0 0 32 22" xmlns="http://www.w3.org/2000/svg">
-                                <rect width="32" height="22" fill="#F5D802"/>
-                                <rect width="10.67" height="22" fill="#1E1E1E"/>
-                                <rect x="21.33" width="10.67" height="22" fill="#E50000"/>
-                            </svg>
-                            2026 © Ben Chiboub. All rights reserved.
-                        </div>
-                    </div>
-                </footer>
-            `
-        });
+      <a class="project-card" href="https://github.com/mrkinix/BCcarver" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <div class="proj-name">BCcarver</div>
+          <div class="proj-stars">★ 2</div>
+        </div>
+        <div class="proj-desc">Ben Chiboub Carver — a Rust utility built for precision and minimal overhead.</div>
+        <div class="proj-lang"><span class="lang-dot lang-rust"></span> Rust</div>
+      </a>
 
-        app.use(router);
-        app.mount('#app');
-    </script>
+      <a class="project-card" href="https://github.com/mrkinix/BcFarm" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <div class="proj-name">BcFarm</div>
+          <div class="proj-stars">★ 1</div>
+        </div>
+        <div class="proj-desc">Open source farm management app, built with Vue for a clean and approachable interface.</div>
+        <div class="proj-lang"><span class="lang-dot lang-vue"></span> Vue</div>
+      </a>
+
+      <a class="project-card" href="https://github.com/mrkinix/BCtranslate" target="_blank" rel="noopener">
+        <div class="proj-top">
+          <div class="proj-name">BCtranslate</div>
+          <div class="proj-stars">↗ repo</div>
+        </div>
+        <div class="proj-desc">Ben Chiboub Translate — a lightweight translation tool, following the same minimal, sharp-tool philosophy as the rest of the BC series.</div>
+        <div class="proj-lang"><span class="lang-dot lang-js"></span> View on GitHub</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="section-head" style="justify-content:center;">
+      <span class="path">~/contact</span>
+      <div class="rule" style="max-width:80px;"></div>
+    </div>
+    <h2>Let's build something minimal.</h2>
+    <p>Open to conversations about Vue/Node, Rust, AI engineering, or interesting problems worth solving well.</p>
+    <div class="contact-actions">
+      <a class="btn primary" href="mailto:hodhodbenchiboub@gmail.com">hodhodbenchiboub@gmail.com</a>
+      <a class="btn" href="https://benchiboub.com" target="_blank" rel="noopener">benchiboub.com ↗</a>
+      <a class="btn" href="https://github.com/mrkinix" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="https://buymeacoffee.com/hodhodbencv" target="_blank" rel="noopener">Buy me a coffee ↗</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  st@mrkinix:~$ exit <span class="prompt-end">— thanks for stopping by.</span>
+</footer>
+
+<script>
+  // ---------- Dynamic age & years coding ----------
+  (function(){
+    var birth = new Date(2001, 3, 6); // April 6, 2001
+    var now = new Date();
+    var age = now.getFullYear() - birth.getFullYear();
+    var m = now.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) age--;
+    document.getElementById('statAge').textContent = age;
+    document.getElementById('aboutAge').textContent = age;
+
+    var codingSince = 2017;
+    var years = now.getFullYear() - codingSince;
+    document.getElementById('statYears').textContent = years + '+';
+  })();
+
+  // ---------- Theme toggle ----------
+  (function(){
+    var root = document.documentElement;
+    var buttons = document.querySelectorAll('[data-theme-btn]');
+    function setTheme(t){
+      root.setAttribute('data-theme', t);
+      buttons.forEach(function(b){
+        b.classList.toggle('active', b.getAttribute('data-theme-btn') === t);
+      });
+    }
+    buttons.forEach(function(b){
+      b.addEventListener('click', function(){ setTheme(b.getAttribute('data-theme-btn')); });
+    });
+  })();
+
+  // ---------- Interactive terminal: intellisense + QA generator ----------
+  (function(){
+    var input = document.getElementById('termInput');
+    var box = document.getElementById('intellisense');
+    var output = document.getElementById('termOutput');
+    var hintLabel = document.getElementById('termHintLabel');
+
+    var commands = [
+      { cmd: 'whoami',     desc: 'show identity' },
+      { cmd: 'about',      desc: 'short bio' },
+      { cmd: 'skills',     desc: 'tech &amp; focus' },
+      { cmd: 'education',  desc: 'degrees' },
+      { cmd: 'projects',   desc: 'list repos' },
+      { cmd: 'contact',    desc: 'get in touch' },
+      { cmd: 'qa',         desc: 'generate Q&amp;A from github' },
+      { cmd: 'help',       desc: 'list commands' },
+      { cmd: 'clear',      desc: 'clear output' }
+    ];
+
+    var qaData = [
+      { q: 'What is your main tech stack?', a: 'Full-stack Vue.js and Node.js, day to day — with Rust for anything performance-critical.' },
+      { q: 'Since when have you been coding?', a: 'Since 2017.' },
+      { q: 'What is BCsort?', a: 'A high-performance, in-place ternary distribution sort in Rust, achieving O(N log N) scaling via statistical threshold partitioning.' },
+      { q: 'What is BCTravel?', a: 'An exact TSP solver in Rust — solves under 40 nodes in less than 0.4 seconds, and scales correctly well beyond 75 nodes.' },
+      { q: 'Do you work with AI?', a: 'Yes — AI engineering (configuring LLMs, wiring up AI APIs) and vibe coding are part of how I build now.' },
+      { q: 'Where did you study?', a: 'Computer Science at the Université Libre de Bruxelles (ULB).' },
+      { q: 'Any design skills?', a: 'Photoshop and After Effects, for when a project needs a visual or motion touch.' },
+      { q: 'What drives your projects?', a: 'Minimalism, privacy, and open source — software that does one thing, fast, without phoning home.' }
+    ];
+
+    var activeIndex = -1;
+    var filtered = [];
+
+    function renderBox(){
+      var val = input.value.trim().toLowerCase();
+      filtered = val === '' ? [] : commands.filter(function(c){ return c.cmd.indexOf(val) === 0 && c.cmd !== val; });
+      if (filtered.length === 0){ box.classList.remove('open'); box.innerHTML = ''; activeIndex = -1; return; }
+      activeIndex = 0;
+      box.innerHTML = filtered.map(function(c, i){
+        return '<div class="intellisense-item' + (i === 0 ? ' sel' : '') + '" data-cmd="' + c.cmd + '">' +
+          '<span>' + c.cmd + '</span><span class="desc">' + c.desc + '</span></div>';
+      }).join('');
+      box.classList.add('open');
+    }
+
+    function accept(cmd){
+      input.value = cmd;
+      box.classList.remove('open');
+      box.innerHTML = '';
+    }
+
+    box.addEventListener('mousedown', function(e){
+      var item = e.target.closest('.intellisense-item');
+      if (item){ accept(item.getAttribute('data-cmd')); input.focus(); }
+    });
+
+    input.addEventListener('input', renderBox);
+
+    input.addEventListener('keydown', function(e){
+      if (box.classList.contains('open') && (e.key === 'Tab' || e.key === 'ArrowRight')){
+        e.preventDefault();
+        accept(filtered[activeIndex].cmd);
+        return;
+      }
+      if (e.key === 'ArrowDown' && filtered.length){
+        e.preventDefault();
+        activeIndex = (activeIndex + 1) % filtered.length;
+        Array.from(box.children).forEach(function(el, i){ el.classList.toggle('sel', i === activeIndex); });
+        return;
+      }
+      if (e.key === 'ArrowUp' && filtered.length){
+        e.preventDefault();
+        activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+        Array.from(box.children).forEach(function(el, i){ el.classList.toggle('sel', i === activeIndex); });
+        return;
+      }
+      if (e.key === 'Enter'){
+        e.preventDefault();
+        if (box.classList.contains('open') && activeIndex > -1){ accept(filtered[activeIndex].cmd); }
+        runCommand(input.value.trim().toLowerCase());
+      }
+    });
+
+    function runCommand(cmd){
+      if (!cmd) return;
+      hintLabel.textContent = 'last: ' + cmd;
+
+      if (cmd === 'clear'){
+        output.classList.remove('show');
+        output.innerHTML = '';
+        input.value = '';
+        return;
+      }
+
+      var html = '<div class="echoed"><b>st@mrkinix:~$</b> ' + cmd + '</div>';
+
+      switch(cmd){
+        case 'whoami':
+          html += '<div>Hédi Ben Chiboub — mrkinix. Belgian, full-stack engineer (Vue.js / Node.js), Rust for performance work, AI engineering on the side.</div>';
+          break;
+        case 'about':
+          html += '<div>Minimalism x privacy x open source. Coding since 2017. Studied CS at ULB. Currently at BC software, working from home.</div>';
+          break;
+        case 'skills':
+          html += '<div>Main: Vue.js, Node.js. Also: Rust, Python, C++, React, Unreal Engine 5. Plus: vibe coding, AI/LLM engineering, Photoshop, After Effects.</div>';
+          break;
+        case 'education':
+          html += '<div>BSc Computer Science — Université Libre de Bruxelles. Baccalauréat Mathematics, 2020 (14.46/60).</div>';
+          break;
+        case 'projects':
+          html += '<div>BCsort, BCTravel, BCcarver, BcFarm, BCtranslate — all on <a href="https://github.com/mrkinix" target="_blank" rel="noopener">github.com/mrkinix</a>.</div>';
+          break;
+        case 'contact':
+          html += '<div>Email: <a href="mailto:hodhodbenchiboub@gmail.com">hodhodbenchiboub@gmail.com</a> · Site: <a href="https://benchiboub.com" target="_blank" rel="noopener">benchiboub.com</a></div>';
+          break;
+        case 'help':
+          html += '<div>' + commands.map(function(c){ return c.cmd; }).join(' · ') + '</div>';
+          break;
+        case 'qa':
+        case 'qa --generate':
+          html += qaData.map(function(item){
+            return '<div class="qa-item"><div class="q">Q: ' + item.q + '</div><div class="a">A: ' + item.a + '</div></div>';
+          }).join('');
+          break;
+        default:
+          html += '<div>command not found — type <b>help</b> for a list.</div>';
+      }
+
+      output.innerHTML = html;
+      output.classList.add('show');
+      input.value = '';
+    }
+
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('.term-input-wrap')){
+        box.classList.remove('open');
+      }
+    });
+  })();
+</script>
+
 </body>
 </html>
